@@ -7,21 +7,26 @@
 import os
 import json
 import sys
+import pandas as pd
 
 # In[4]:
 
 if len(sys.argv)==2:
-    output = sys.argv[1]
+    output = sys.argv[1]+'csv'
 else:
-    output = 'default.csv'
+    output = 'default.csv' 
 
 tweets = []
 
-for filename in os.listdir(os.getcwd()):
-    if '.ipynb' not in filename:
-        with open(filename, 'r') as file:
+path = os.getcwd()+"\Data\\tweet"
+print(path)
+
+for filename in os.listdir(path):
+    if '.' not in filename:
+    	file = path+"\\"+filename
+    	with open(file, 'r') as file:
             data = json.load(file)
-        tweets.append(data)
+    	tweets.append(data)
 
 
 # In[15]:
@@ -38,5 +43,4 @@ for i in range(len(tweets)):
 
 my_df = pd.DataFrame(clean_tweets)
 
-my_df.to_csv('rasis.csv', index=False, header=False)
-
+my_df.to_csv(output, index=False, header=False)
